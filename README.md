@@ -1,7 +1,7 @@
 # solitare
  
 ## --------Opis-----------
-Ten projekt ma być odzorowaniem solitare w pythonie do konkursu "Giganci PRogramowania"
+Ten projekt ma być odzorowaniem solitare w pythonie do konkursu "Giganci Programowania"
 
 ## --------Instalacje-----
 brak
@@ -10,7 +10,8 @@ brak
 `python main.py`
 
 ## --------Działanie------
-brak
+Aby zakończyć napisz "000"
+Aby dobrać karte napisz "0"
 
 ## --------Wymagania------
 Wersja "Python 3.11.9"
