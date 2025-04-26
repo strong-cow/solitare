@@ -25,10 +25,10 @@ class Karta:
         return f"Karta({self.wartosc!r}, {self.znak!r})"
 
 # Klasa Karty może teraz służyć tylko jako "fabryka" talii
-# Można by ją nawet usunąć i zrobić stwurz_karty() zwykłą funkcją
+# Można by ją nawet usunąć i zrobić stworz_karty() zwykłą funkcją
 class Karty:
     @staticmethod
-    def stwurz_karty():
+    def stworz_karty():
         """Tworzy i zwraca potasowaną talię obiektów Karta."""
         znaki = ['♣', '♦', '♥', '♠'] # Używamy teraz nazwy 'znaki'
         wartosci = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -110,7 +110,7 @@ def dobierz_dodatkowa_karte():
 talia = []
 dodatkowe_karty = [] # Stos odkryty (karty dobierane)
 
-talia = Karty.stwurz_karty()  # Tworzymy talię obiektów Karta
+talia = Karty.stworz_karty()  # Tworzymy talię obiektów Karta
 
 # Pobranie pierwszej karty do stosu odkrytego
 if talia:
