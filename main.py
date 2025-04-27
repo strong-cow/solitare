@@ -1,10 +1,12 @@
 import random
 
+# --- Klasy ---
+
 class Karta:
-    """Representuje pojedynczą kartę do gry."""
+    """TYLKO KARTA"""
     def __init__(self, wartosc, znak):
-        self.wartosc = wartosc  # Np. 'K', '7', 'A'
-        self.znak = znak      # Np. '♠', '♥', '♦', '♣'
+        self.wartosc = wartosc  # Np K 7 A
+        self.znak = znak      # ♠ ♥ ♦ ♣
 
         # Określenie koloru (czerwony/czarny) na podstawie znaku
         if self.znak in ['♥', '♦']:
@@ -12,25 +14,19 @@ class Karta:
         elif self.znak in ['♠', '♣']:
             self.kolor_rgb = "czarny"
         else:
-            self.kolor_rgb = "nieznany" # Na wszelki wypadek
+            self.kolor_rgb = "nieznany" 
 
-    # Metoda __str__ kontroluje, jak obiekt karty będzie wyglądał po wydrukowaniu
-    # Zwracamy format "Wartość Znak", aby pasował do poprzedniej wersji
     def __str__(self):
-        return f"{self.wartosc} {self.znak}"
+        return f"{self.wartosc} {self.znak}" # Używamy __str__ do reprezentacji stringowej
 
-    # Metoda __repr__ jest używana m.in. przy wyświetlaniu listy kart
-    # Możemy ją zdefiniować podobnie do __str__ dla czytelności
     def __repr__(self):
-        return f"Karta({self.wartosc!r}, {self.znak!r})"
+        return f"Karta({self.wartosc!r}, {self.znak!r})" # Używamy __repr__ do debugowania
 
-# Klasa Karty może teraz służyć tylko jako "fabryka" talii
-# Można by ją nawet usunąć i zrobić stwurz_karty() zwykłą funkcją
-class Karty:
+class Fabryka_Talii_Kart:
     @staticmethod
     def stwurz_karty():
-        """Tworzy i zwraca potasowaną talię obiektów Karta."""
-        znaki = ['♣', '♦', '♥', '♠'] # Używamy teraz nazwy 'znaki'
+        """Tworzy i zwraca potasowaną talię."""
+        znaki = ['♣', '♦', '♥', '♠'] #
         wartosci = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
         talia = []
 
@@ -40,17 +36,23 @@ class Karty:
                 nowa_karta = Karta(wartosc, znak)
                 talia.append(nowa_karta)
 
-        random.shuffle(talia)  # Tasowanie talii obiektów Karta
+        random.shuffle(talia)
         return talia
 
-# --- Funkcje gry (generuj_mape, dobierz_dodatkowa_karte) ---
-# Ważne: Te funkcje teraz będą operować na liście obiektów Karta, a nie stringów.
-# Jednak dzięki metodzie __str__ w klasie Karta, ich działanie (zwłaszcza print)
-# powinno pozostać bardzo podobne lub identyczne.
+
+# ---Funkcje gry---
+def posegreguj_karty(talia):
+    for ile in range(1, 8):
+        print("0")
+        for i in range(7-ile):
+            print("1")
+            plansza.append(talia.pop(0))
+    print(f"to jest posegrowana plansza{talia}")
+
+    pass
 
 def generuj_mape(talia):
-    plansza = []
-    for i in range(7):
+    '''for i in range(7):
         wiersz = []
         for j in range(i + 1):
             wiersz.append(None)
@@ -59,76 +61,72 @@ def generuj_mape(talia):
     for i in range(7):
         for j in range(i + 1):
             if talia:
-                # Pobieramy obiekt Karta z talii
                 plansza[i][j] = talia.pop(0)
 
     ktory = 0
-    print("--- Plansza ---") # Dodajmy nagłówek dla czytelności
-    for wiersz in plansza:
+    print("--- Plansza ---")
+    for wiersz in plansza: # ten sposób jest zły
         ktory += 1
-        # Drukujemy "?" dla ukrytych kart (None lub obiektów Karta)
-        # Zakładamy, że tylko ostatnia karta w wierszu jest widoczna
-        # (Uwaga: logika ukrywania/odkrywania kart może wymagać rozbudowy)
         linia_do_druku = []
-        for idx, karta_lub_none in enumerate(wiersz):
-            if idx < len(wiersz) - 1:
-                 # Na razie drukujemy "?" dla wszystkich poza ostatnią
-                 # W pełnej grze tu byłaby logika sprawdzania czy karta jest odkryta
+        for sprwadzanlnik, karta_lub_brak in enumerate(wiersz): # enumerate zamiast range(len(wiersz))
+            if sprwadzanlnik < len(wiersz) - 1:
                  linia_do_druku.append("?")
             else:
-                # Ostatnia karta w wierszu - drukujemy jej reprezentację stringową
-                # Jeśli wiersz jest pusty (co nie powinno się zdarzyć w tej strukturze),
-                # lub karta to None, obsłuż to (choć tu raczej będzie obiekt Karta)
-                 if karta_lub_none:
-                     linia_do_druku.append(str(karta_lub_none)) # Używamy str() jawnie lub niejawnie przez print
+                 if karta_lub_brak:
+                     linia_do_druku.append(str(karta_lub_brak))
                  else:
-                     linia_do_druku.append("?") # Lub obsłuż inaczej
+                     linia_do_druku.append("?")
 
-        # Wyrównanie i drukowanie
         print(" ".join(linia_do_druku))
 
-
-    # Puste stosy na dole (bez zmian)
-    print("\n--- Stosy Bazowe i Dobieranie ---") # Nagłówek
-    print("                           ♥ [ ]") # Przykładowe oznaczenie pustego stosu
+    print("\n--- Stosy Bazowe i Dobieranie ---") 
+    print("                           ♥ [ ]") 
     print("                           ♦ [ ]")
-    # Wyświetlenie karty ze stosu odkrytego (jeśli istnieje)
     odkryta_karta_str = str(dodatkowe_karty[0]) if dodatkowe_karty else "[ ]"
-    print(f"Odkryta: {odkryta_karta_str:<5}              ♠ [ ]") # Używamy str() i formatowania
-    print(f"Talia: {'[?]' if talia else '[ ]':<5}            ♣ [ ]") # Pokaż czy są karty w talii
+    print(f"Odkryta: {odkryta_karta_str:<5}              ♠ [ ]") 
+    print(f"Talia: {'[?]' if talia else '[ ]':<5}            ♣ [ ]") '''
+    pass
 
-# Zmieniona nazwa funkcji dla jasności
 def dobierz_dodatkowa_karte():
-    global talia, dodatkowe_karty # Jawne użycie globalnych zmiennych (lub przekazanie jako argumenty)
+    global talia, dodatkowe_karty 
     if talia:
-        dodatkowe_karty.insert(0, talia.pop(0)) # Dodaj na początek stosu odkrytego
+        dodatkowe_karty.insert(0, talia.pop(0)) 
     else:
-        # Opcjonalnie: Przetasuj karty z 'dodatkowe_karty' (bez ostatniej?) z powrotem do 'talia'
+        
         print("Talia jest pusta.")
 
+def poruszanie_kartami(linia, dokąd, ile):
+    try:
+        pass
+    except ValueError:
+        print("Błąd: Niepoprawne dane wejściowe.")
+
 # --- Główna część skryptu ---
+
 talia = []
-dodatkowe_karty = [] # Stos odkryty (karty dobierane)
+dodatkowe_karty = [] 
+plansza = []
+wygrana = False
 
-talia = Karty.stwurz_karty()  # Tworzymy talię obiektów Karta
+talia = Fabryka_Talii_Kart.stwurz_karty() 
+posegreguj_karty(talia)
 
-# Pobranie pierwszej karty do stosu odkrytego
 if talia:
     dodatkowe_karty.append(talia.pop(0))
 else:
     print("Błąd: Pusta talia!")
     exit()
 
-# Pierwsze wyświetlenie planszy
-generuj_mape(talia) # Przekazujemy resztę talii
+generuj_mape(talia)
 
 # --- Pętla Gry ---
-wygrana = False
+
 while not wygrana:
-    # Przykład dostępu do koloru karty (np. pierwszej odkrytej)
     if dodatkowe_karty:
         pierwsza_odkryta = dodatkowe_karty[0]
+        #debug
         print(f"(Debug: Kolor karty {pierwsza_odkryta} to {pierwsza_odkryta.kolor_rgb})")
+        print(f"Tak wygląda mapa po koleji: {talia}")
 
     opcja = input("Wybierz opcję ").strip().lower()
 
@@ -138,10 +136,9 @@ while not wygrana:
         break
     elif opcja == "0":
         dobierz_dodatkowa_karte()
-        # Wyświetl stan gry ponownie
         print("-" * 30)
         generuj_mape(talia)
-        print(f"Stos odkryty: {dodatkowe_karty}") # Wyświetli listę obiektów Karta
+        print(f"Stos odkryty: {dodatkowe_karty}") 
         print("-" * 30)
     else:
         print("Nieznana opcja.")
