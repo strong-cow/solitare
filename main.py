@@ -22,9 +22,9 @@ class Karta:
     def __repr__(self):
         return f"Karta({self.wartosc!r}, {self.znak!r})" # Używamy __repr__ do debugowania
 
-# Klasa Karty może teraz służyć tylko jako "fabryka" talii
+
 # Można by ją nawet usunąć i zrobić stworz_karty() zwykłą funkcją
-class Karty:
+class Fabryka_Kart:
     @staticmethod
     def stworz_karty():
         """Tworzy i zwraca potasowaną talię obiektów Karta."""
@@ -110,12 +110,7 @@ dodatkowe_karty = []
 plansza = []
 wygrana = False
 
-<<<<<<< HEAD
-talia = Fabryka_Talii_Kart.stwurz_karty() 
-posegreguj_karty(talia)
-=======
-talia = Karty.stworz_karty()  # Tworzymy talię obiektów Karta
->>>>>>> 4d818de8d694873cbf4c790d864ded2fc0b9fbdb
+talia = Fabryka_Kart.stworz_karty()  # Tworzymy talię obiektów Karta
 
 if talia:
     dodatkowe_karty.append(talia.pop(0))
