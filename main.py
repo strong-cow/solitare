@@ -22,11 +22,13 @@ class Karta:
     def __repr__(self):
         return f"Karta({self.wartosc!r}, {self.znak!r})" # Używamy __repr__ do debugowania
 
-class Fabryka_Talii_Kart:
+# Klasa Karty może teraz służyć tylko jako "fabryka" talii
+# Można by ją nawet usunąć i zrobić stworz_karty() zwykłą funkcją
+class Karty:
     @staticmethod
-    def stwurz_karty():
-        """Tworzy i zwraca potasowaną talię."""
-        znaki = ['♣', '♦', '♥', '♠'] #
+    def stworz_karty():
+        """Tworzy i zwraca potasowaną talię obiektów Karta."""
+        znaki = ['♣', '♦', '♥', '♠'] # Używamy teraz nazwy 'znaki'
         wartosci = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
         talia = []
 
@@ -108,8 +110,12 @@ dodatkowe_karty = []
 plansza = []
 wygrana = False
 
+<<<<<<< HEAD
 talia = Fabryka_Talii_Kart.stwurz_karty() 
 posegreguj_karty(talia)
+=======
+talia = Karty.stworz_karty()  # Tworzymy talię obiektów Karta
+>>>>>>> 4d818de8d694873cbf4c790d864ded2fc0b9fbdb
 
 if talia:
     dodatkowe_karty.append(talia.pop(0))
