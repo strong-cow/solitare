@@ -1,0 +1,4 @@
+Ten projekt wykorzystuje wyłącznie standardowe biblioteki Pythona.
+Główna używana biblioteka (wbudowana):
+random (do tasowania kart)
+Nie ma potrzeby instalowania zewnętrznych zależności za pomocą pip.
